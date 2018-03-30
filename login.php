@@ -15,7 +15,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 	//$eid = test_input($_POST["eid"]);
         $eid = $_POST["eid"];
 	$pwd = md5($_POST["pwd"]);
-	$verify = 'SELECT `Password`, `Minister_ID` FROM `minister_info` WHERE `Email_ID` = \''.$eid.'\';';
+	$verify = 'SELECT `Password`, `Minister_ID`,`Name` FROM `minister_info` WHERE `Email_ID` = \''.$eid.'\';';
 	$v_output = $db->get_row($verify);
 	//$v_pass = $v_output->fetch_assoc();
 	$v_pwd = $v_output->Password;//$v_pass["Password"];
@@ -41,6 +41,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 	{
 		//session_start();
 		$_SESSION["id"] = $id;
+                $_SESSION["userName"]=$v_output->Name;
 		//echo $id;
 		//if(strcasecmp($pwd, $default) == 0)
 			//echo "<script>window.document.location.href='reset.php';</script>";
@@ -113,7 +114,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                                     <input class="form-control" placeholder="E-mail" name="eid" type="eid" autofocus>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="pwd" type="pwd" value="">
+                                    <input class="form-control" placeholder="Password" name="pwd" type="password" value="">
                                 </div>
                                 <div class="checkbox">
                                     <label>
