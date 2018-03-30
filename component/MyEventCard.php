@@ -159,16 +159,16 @@ if (isset($_GET['d'])) {
 
                                             </div>
                                         </div>
-                                        <div class="panel-footer" style="height:50px;">
+                                        <div class="panel-footer" style="height:70px;">
                                             <div class="col-sm-12">
-                                                <div class="col-xs-4" style="padding-left: 10%">
+                                                <div class="col-xs-0 col-md-4" style="padding-left: 10%">
 
                                                 </div>
-                                                <div class="col-xs-4" style="padding-left: 10%">
+                                                <div class="col-xs-0 col-md-4" style="padding-left: 10%">
 
                                                 </div>  
-                                                <div class="col-xs-4" style="padding-left: 10%">
-                                                    <?php echo "<a href='engagement.php?d=" . $date . "&f=MyEventCard&rmconfirmed=1&eventid=" . $event->event_id . "'>"; ?><button type="button" class="btn btn-danger btn-rect btn-xl"><i class="fa fa-times">Remove</i>
+                                                <div class="col-xs-8 col-md-4" style="padding-left: 10%">
+                                                    <?php echo "<a href='engagement.php?d=" . $date . "&f=MyEventCard&rmconfirmed=1&eventid=" . $event->event_id . "'>"; ?><button type="button" class="button inverted red"><i class="fa fa-times">Remove</i>
                                                     </button></a>
 
                                                 </div>

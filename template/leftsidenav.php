@@ -29,7 +29,7 @@
                     $picture=$_SESSION["userPicture"];
                     if(isset($picture))
                     {
-                        echo '<center><img class="card-img-top"  alt="No Image Found" src="data:image/jpeg;base64,' . base64_encode($picture) . '"/></center>';
+                        echo '<center><img class="img-thumbnail" style="max-width:50%;" alt="No Image Found" src="data:image/jpeg;base64,' . base64_encode($picture) . '"/></center>';
                     }
                     if (isset($_SESSION)) {
                         ?>

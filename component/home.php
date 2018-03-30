@@ -37,7 +37,7 @@
                                     <i class="fa fa-tags fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge"><?php $count1=$db->get_var("SELECT count(*) FROM `create_event` where date = ".date("Y-m-d", strtotime("+1 day",  strtotime("today")))." and host_id='$id' or event_id in (select event_id from guests where guest_id='$id')"); echo $count1;?></div>
+                                    <div class="huge"><?php $count1=$db->get_var("SELECT count(*) FROM `create_event` where date = ".date("Y-m-d", strtotime("+1 day",  strtotime("today")))." and host_id='$id' or event_id in (select guests.event_id from guests,create_event where guest_id='$id' and date = ".date("Y-m-d", strtotime("+1 day",  strtotime("today")))." and create_event.event_id=guests.event_id)"); echo $count1;?></div>
                                     <div>Tomorrow</div>
                                 </div>
                             </div>

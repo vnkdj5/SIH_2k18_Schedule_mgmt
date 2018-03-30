@@ -179,20 +179,20 @@ if (isset($_GET['d'])) {
                                     <!--body-->
                                 </div>
                                 <!--footer-->
-                                <div class="panel-footer" style="height:50px;">
+                                <div class="panel-footer" style="height:70px;">
                                     <div class="col-sm-12">
-                                        <div class="col-xs-4">
-                                     <?php echo "<a href='".$_SESSION['currentpage'].".php?qs=".$qs."&d=".$_GET['d']."&f=EventCardEngagement&eventapproval=1&eventid=".$event->event_id."'> <button type='button' class='button inverted red'"; if($event->Status==2){echo "style='border: 2px solid black; box-shadow: 3px 3px 5px black;'";} echo "><i class='fa fa-check'>Going</i>
+                                        <div class="col-xs-5 col-md-4">
+                                     <?php echo "<a href='".$_SESSION['currentpage'].".php?qs=".$qs."&d=".$_GET['d']."&f=EventCardEngagement&eventapproval=1&eventid=".$event->event_id."'> <button type='button' class='button inverted green'"; if($event->Status==2){ echo "style='border: 2px solid black;background-color: #77b950;color: white;'"; } echo "><i class='fa fa-check hidden-sm-up'>Going</i>
                                      </button></a>";?>
                                  </div>
-                                 <div class="col-xs-4">
+                                 <div class="col-xs-5 col-md-4">
                                      
-                                     <?php echo "<a href='".$_SESSION['currentpage'].".php?qs=".$qs."&d=".$_GET['d']."&f=EventCardEngagement&eventinterested=1&eventid=".$event->event_id."'> <button type='button' class='btn btn-info btn-rect btn-xl'"; if($event->Status==1){echo "style='border: 2px solid black; box-shadow: 3px 3px 5px black;'";} echo "><i class='fa fa-star'>Interested</i>
+                                     <?php echo "<a href='".$_SESSION['currentpage'].".php?qs=".$qs."&d=".$_GET['d']."&f=EventCardEngagement&eventinterested=1&eventid=".$event->event_id."'> <button type='button' class='button inverted blue'"; if($event->Status==1){echo "style='border: 2px solid black;background-color: #78c6e1;color: white;'";} echo "><i class='fa fa-star'>Interested</i>
                                      </button></a>";?>
                                  </div>  
-                                 <div class="col-xs-4">
+                                 <div class="col-xs-5 col-md-4">
                                     
-                                      <?php echo "<a href='".$_SESSION['currentpage'].".php?qs=".$qs."&d=".$_GET['d']."&f=EventCardEngagement&eventdisapprove=1&eventid=".$event->event_id."'> <button type='button' class='btn btn-warning btn-rect btn-xl'"; if($event->Status==0){echo "style='border: 2px solid black; box-shadow: 3px 3px 5px black;'";} echo "><i class='fa fa-times'>Not Interested</i>
+                                      <?php echo "<a href='".$_SESSION['currentpage'].".php?qs=".$qs."&d=".$_GET['d']."&f=EventCardEngagement&eventdisapprove=1&eventid=".$event->event_id."'> <button type='button' class='button inverted red'"; if($event->Status==0){echo "style='border: 2px solid black;background-color: #f14852;color: white;'";} echo "><i class='fa fa-times'>Not Interested</i>
                                      </button></a>";?>
                                 </div>
                                     </div>

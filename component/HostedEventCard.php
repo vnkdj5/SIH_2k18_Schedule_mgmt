@@ -141,16 +141,16 @@ if ($events == NULL) {
                                                
                                             </div>
                                         </div>
-                                        <div class="panel-footer" style="height:50px;">
+                                        <div class="panel-footer" style="height:70px;">
                                             <div class="col-sm-12">
-                                                <div class="col-xs-4" style="padding-left: 10%">
+                                                <div class="col-xs-0 col-md-4" style="padding-left: 10%">
 
                                                 </div>
-                                                <div class="col-xs-4" style="padding-left: 10%">
+                                                <div class="col-xs-0 col-md-4" style="padding-left: 10%">
 
                                                 </div>  
-                                                <div class="col-xs-4" style="padding-left: 10%">
-                                                    <?php echo "<a href='updateEvent.php?eventid=" . $event->event_id . "'>"; ?><button type="button" class="btn btn-danger btn-rect btn-xl"><i class="fa fa-key">Manage Event</i>
+                                                <div class="col-xs-8 col-md-4" style="width:130%;">
+                                                    <?php echo "<a href='updateEvent.php?eventid=" . $event->event_id . "'>"; ?><button type="button" class="button  red"><i class="fa fa-key">Manage Event</i>
                                             </button></a>
                                                     
                                                 </div>
