@@ -22,18 +22,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 	$id = $v_output->Minister_ID;//$v_pass["Minister_ID"];
 	$default = '827CCB0EEA8A706C4C34A16891F84E7B';
 	$date = Date("Y-m-d");
-	echo $eid;
+	#echo $eid;
 	/*$fetch = 'SELECT * FROM `Forgot_Password` WHERE `Hostelite_ID`= '.$id.' AND `Date` = \''.$date.'\'';
 	$res_fetch = $connect->query($fetch);
 	if($res_fetch->num_rows != 0)
 	{
 		$row = $res_fetch->fetch_assoc();
-		echo $pwd;
+		#echo $pwd;
 		if(strcasecmp($pwd,$row['Password']) == 0)
 		{
 			$delete = 'DELETE FROM `Forgot_Password` WHERE `Hostelite_ID` = '.$id.';';
 			$connect->query($delete);
-			echo "<script>window.document.location.href='reset.php';</script>";
+		#	echo "<script>window.document.location.href='reset.php';</script>";
 		}
 	}*/
 			
