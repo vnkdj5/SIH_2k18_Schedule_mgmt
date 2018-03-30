@@ -3,6 +3,7 @@
 session_start();
 if (!isset($_SESSION['id'])) {
     header("location:login.html");
+    $id=$_SESSION['id'];
 }
 ?>
 <html lang="en">
@@ -108,9 +109,9 @@ if (!isset($_SESSION['id'])) {
                                             if (isset($_POST["searchCriteria"])) {
                                                 $startDate = $_POST["startDate"];
                                                 $endDate = $_POST["endDate"];
-                                                $result = $db->get_results("SELECT * FROM `create_event` where date >= '$startDate' and date<='$endDate'");
+                                                $result = $db->get_results("SELECT * FROM `create_event` where date >= '$startDate' and date<='$endDate' and host_id='$id'");
                                             } else {
-                                                $result = $db->get_results("select * from create_event;");
+                                                $result = $db->get_results("select * from create_event and host_id='$id';");
                                             }
 
 #
