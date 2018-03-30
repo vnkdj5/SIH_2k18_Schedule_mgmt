@@ -109,9 +109,9 @@ if (!isset($_SESSION['id'])) {
                                             if (isset($_POST["searchCriteria"])) {
                                                 $startDate = $_POST["startDate"];
                                                 $endDate = $_POST["endDate"];
-                                                $result = $db->get_results("SELECT * FROM `create_event` where date >= '$startDate' and date<='$endDate' and host_id='$id'");
+                                                $result = $db->get_results("SELECT * FROM `create_event` where date >= '$startDate' and date<='$endDate' and host_id='$id' or event_id in (select event_id from guests where guest_id='$id')");
                                             } else {
-                                                $result = $db->get_results("select * from create_event and host_id='$id';");
+                                                $result = $db->get_results("select * from create_event where host_id='$id' or event_id in (select event_id from guests where guest_id='$id')");
                                             }
 
 #
