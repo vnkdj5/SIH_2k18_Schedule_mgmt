@@ -70,7 +70,7 @@ if(is_uploaded_file($_FILES['userImage']['tmp_name'])) {
 $imgData =addslashes(file_get_contents($_FILES['userImage']['tmp_name']));
 $imageProperties = getimageSize($_FILES['userImage']['tmp_name']);
 $db->query("UPDATE minister_info SET Picture = '".$imgData."' WHERE Minister_ID = '".$id."'");
-$_SESSION["userPicture"]=$imgData;
+$_SESSION["userPicture"]=$db->get_var("Select Picture from minister_info WHERE Minister_ID = '".$id."'");
 header( "location:userProfile.php" );
 }}
 

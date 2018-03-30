@@ -7,7 +7,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Schedule Management</a>
+                <a class="navbar-brand" href="index.php">Schedule Management</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -34,6 +34,7 @@
             <!-- /.navbar-top-links -->
 
            <?php
+          
            include('leftsidenav.php');
            ?>
         </nav>

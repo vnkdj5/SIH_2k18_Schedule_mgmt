@@ -2,7 +2,7 @@
 
 include_once('private/conn.php');
 session_start();
-$user_id='kajal1';//$_SESSION["id"];
+$user_id=$_SESSION["id"];
 if($_POST)
 {
     $event_name=$_POST["event_name"];

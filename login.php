@@ -15,8 +15,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 	//$eid = test_input($_POST["eid"]);
         $eid = $_POST["eid"];
 	$pwd = md5($_POST["pwd"]);
-	$verify = 'SELECT `Password`, `Minister_ID`,`Name` FROM `minister_info` WHERE `Email_ID` = \''.$eid.'\';';
+	$verify = 'SELECT `Password`, `Minister_ID`,`Name`,`Picture` FROM `minister_info` WHERE `Minister_ID` = \''.$eid.'\';';
 	$v_output = $db->get_row($verify);
+        
 	//$v_pass = $v_output->fetch_assoc();
 	$v_pwd = $v_output->Password;//$v_pass["Password"];
 	$id = $v_output->Minister_ID;//$v_pass["Minister_ID"];
@@ -28,12 +29,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 	if($res_fetch->num_rows != 0)
 	{
 		$row = $res_fetch->fetch_assoc();
-		#echo $pwd;
+		echo $pwd;
 		if(strcasecmp($pwd,$row['Password']) == 0)
 		{
 			$delete = 'DELETE FROM `Forgot_Password` WHERE `Hostelite_ID` = '.$id.';';
 			$connect->query($delete);
-		#	echo "<script>window.document.location.href='reset.php';</script>";
+			echo "<script>window.document.location.href='reset.php';</script>";
 		}
 	}*/
 			
@@ -41,7 +42,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 	{
 		//session_start();
 		$_SESSION["id"] = $id;
-                $_SESSION["userName"]=$v_output->Name;
+                  $_SESSION["userName"]=$v_output->Name;
+                 $_SESSION["userPicture"]=$v_output->Picture;
 		//echo $id;
 		//if(strcasecmp($pwd, $default) == 0)
 			//echo "<script>window.document.location.href='reset.php';</script>";
@@ -52,7 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 	{
 ?>
 	<script>
-		window.alert("Incorrect Email ID or Password.");
+		window.alert("Incorrect Username or Password.");
 		window.document.location.href = 'login.php';
 	</script>
 <?php
@@ -111,7 +113,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                         <form  role="form" method="post" action="login.php">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="E-mail" name="eid" type="eid" autofocus>
+                                    <input class="form-control" placeholder="Username" name="eid" type="eid" autofocus>
                                 </div>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Password" name="pwd" type="password" value="">
@@ -124,6 +126,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                                 </div>
                                
                                 <input type="submit" name="loginMode" class="btn btn-lg btn-success btn-block" value="Login">
+				<a href='signup.php'>Don't have an account? SignUp!</a>
                             </fieldset>
                         </form>
                     </div>

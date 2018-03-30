@@ -146,6 +146,7 @@ if ($events == NULL) {
                                                         <a href="#">Click to View Guest List</a>
                                                     </div>
                                                 </div>
+                                              <!-- EVENT CARD REPORT LINK  
                                                 <div class="col-sm-12 col-xs-12">
                                                     <div class="col-xs-6">
                                                         Report Link
@@ -154,6 +155,8 @@ if ($events == NULL) {
                                                         <a href="#">Click to View Report</a>
                                                     </div>
                                                 </div>
+                                                -->
+                                                
                                             </div>
                                         </div>
                                         <div class="panel-footer" style="height:50px;">

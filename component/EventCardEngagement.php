@@ -76,10 +76,12 @@ if (isset($_GET['d'])) {
                 $qs = '';
 
                 //$qs='calenderschedule';
-                $events = $db->get_results("(SELECT * FROM create_event WHERE date='" . $_GET['d'] . "' and event_id in (SELECT event_id FROM guests WHERE guest_id='" . $id . "')) order by start_time,date");
-
+$events = $db->get_results("SELECT * FROM create_event inner join guests on create_event.event_id = guests.event_id where guest_id='".$id."' and date='".$_GET['d']."' order by start_time,date");
 
                 $cards = 0;
+                if($events==NULL){
+                    echo "No engagements today!!";
+                }else{
                 foreach ($events as $event) {
                     ?>  
 
@@ -155,19 +157,19 @@ if (isset($_GET['d'])) {
                                 <div class="panel-footer" style="height:50px;">
                                     <div class="col-sm-12">
                                         <div class="col-xs-4">
-
-                                            <?php echo "<a href=engagement.php?d=" . $_GET['d'] . "&f=EventCardEngagement&eventapproval=1&eventid=" . $event->event_id . "'>"; ?><button type="button" class="btn btn-info btn-rect btn-xl"><i class="fa fa-check">Going</i>
-                                            </button></a>
-                                        </div>
-                                        <div class="col-xs-4">
-
-                                            <?php echo "<a href=engagement.php?d=" . $_GET['d'] . "&f=EventCardEngagement&eventinterested=1&eventid=" . $event->event_id . "'>"; ?><button type="button" class="btn btn-success btn-rect btn-xl"><i class="fa fa-star">Interested</i>
-                                            </button></a>
-                                        </div>  
-                                        <div class="col-xs-4">
-    <?php echo "<a href=engagement.php?d=" . $_GET['d'] . "&f=EventCardEngagement&eventdisapprove=1&eventid=" . $event->event_id . "'>"; ?><button type="button" class="btn btn-warning btn-rect btn-xl"><i class="fa fa-times">Not Interested</i>
-                                            </button></a>
-                                        </div>
+                                     <?php echo "<a href='".$_SESSION['currentpage'].".php?qs=".$qs."&d=".$_GET['d']."&f=EventCardEngagement&eventapproval=1&eventid=".$event->event_id."'> <button type='button' class='btn btn-success btn-rect btn-xl'"; if($event->Status==2){echo "style='border: 2px solid blue'";} echo "><i class='fa fa-check'>Going</i>
+                                     </button></a>";?>
+                                 </div>
+                                 <div class="col-xs-4">
+                                     
+                                     <?php echo "<a href='".$_SESSION['currentpage'].".php?qs=".$qs."&d=".$_GET['d']."&f=EventCardEngagement&eventinterested=1&eventid=".$event->event_id."'> <button type='button' class='btn btn-info btn-rect btn-xl'"; if($event->Status==1){echo "style='border: 2px solid blue'";} echo "><i class='fa fa-star'>Interested</i>
+                                     </button></a>";?>
+                                 </div>  
+                                 <div class="col-xs-4">
+                                    
+                                      <?php echo "<a href='".$_SESSION['currentpage'].".php?qs=".$qs."&d=".$_GET['d']."&f=EventCardEngagement&eventdisapprove=1&eventid=".$event->event_id."'> <button type='button' class='btn btn-warning btn-rect btn-xl'"; if($event->Status==0){echo "style='border: 2px solid blue'";} echo "><i class='fa fa-times'>Not Interested</i>
+                                     </button></a>";?>
+                                </div>
                                     </div>
                                 </div>
                                 <!--footer-->
@@ -178,7 +180,7 @@ if (isset($_GET['d'])) {
             </div>
           
 
-<?php } ?>
+<?php }}?>
     </div>
 </div>
 </div>

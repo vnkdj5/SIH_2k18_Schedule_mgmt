@@ -94,7 +94,7 @@ var phoneno = /^\d{10}$/;
                         <h3 class="panel-title">Please Sign In</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form" method="POST" onsubmit="fun()" >
+                        <form role="form" method="POST" onsubmit="fun()" action="signup_1.php">
                             <fieldset>
 			<div name="error" id="error">
 				
@@ -231,7 +231,7 @@ if($result2->Minister_ID!="Admin")
 $sql1= 'INSERT into `minister_info` (`Minister_ID`,`Name`, `Office_ID`,`Contact`, `Password`, `Email_ID`,`Party`,`DateOfBirth`,`PlaceOfBirth`) values (\''.$username.'\',\''.$name.'\','.$office_id.','.$num.',\''.md5($password).'\',\''.$email.'\',\''.$party.'\',\''.$dateOfBirth.'\',\''.$placeOfBirth.'\');';
 #echo $sql1;
 $insResult=$db->query($sql1);
-$sql2= 'UPDATE `designation` SET Minister_ID = \''.$username.'\' WHERE designation_name = \''.$designation.'\' AND Office_ID = '.$office_id.' ;';
+$sql2= 'UPDATE `designation` SET Minister_ID = \''.$username.'\' WHERE designation_name = \''.$designation.'\' AND Office_ID = '.$row['office_id'].' ;';
 //echo $sql2;
 $upResult=$db->query($sql2);
 #echo ' RESULT '.$insResult;

@@ -19,16 +19,18 @@
                 <div class="card">
 
                     <?php
-                    // include("private/conn.php");
-                    $db1 = new ezSQL_mysqli('root', '', 'schedule_mgmt', '127.0.0.1');
+                    
+                    if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}                   
+                    
                     $id = $_SESSION["id"];
 //$id = 'surbhi1';
-                    $result3 = $db1->get_row('SELECT * FROM minister_info where Minister_ID= \'' . $id . '\'');
-                    if (isset($result3)) {
-                        $picture = $result3->Picture;
+                    $picture=$_SESSION["userPicture"];
+                    if(isset($picture))
+                    {
                         echo '<center><img class="card-img-top"  alt="No Image Found" src="data:image/jpeg;base64,' . base64_encode($picture) . '"/></center>';
                     }
-
                     if (isset($_SESSION)) {
                         ?>
                         <h4 class="card-title bold">
