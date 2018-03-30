@@ -1,4 +1,4 @@
-+<!DOCTYPE html>
+<!DOCTYPE html>
 <!--
 <HTML>
 <HEAD>
@@ -36,7 +36,7 @@ $result2 = $db->get_row('SELECT * FROM designation where Minister_ID= \''.$id.'\
 $result1 = $db->get_row('SELECT * FROM ministryoffice WHERE office_id IN (SELECT Office_ID from designation WHERE Minister_ID = \''.$id.'\')');
 
 
-
+error_reporting(0);
 if(isset($result3))
 { 
 $name=$result3->Name;
@@ -46,7 +46,7 @@ $design=$result2->designation_name;
 $emailId=$result3->Email_ID;
 $contact=$result3->Contact;
 $ministerId=$result3->Minister_ID;
-
+error_reporting(1);
 ?>
 
 
@@ -70,6 +70,7 @@ if(is_uploaded_file($_FILES['userImage']['tmp_name'])) {
 $imgData =addslashes(file_get_contents($_FILES['userImage']['tmp_name']));
 $imageProperties = getimageSize($_FILES['userImage']['tmp_name']);
 $db->query("UPDATE minister_info SET Picture = '".$imgData."' WHERE Minister_ID = '".$id."'");
+$_SESSION["userPicture"]=$imgData;
 header( "location:userProfile.php" );
 }}
 
@@ -95,7 +96,7 @@ document.getElementById('UploadNow').style.display= "block";
 
 </td>
       <td height="36" valign="top" style="font-size:24px"><div align="left">Party:</div></td>
-    <td height="36" valign="top" style="font-size:24px"><?php echo $result3->party; ?></td>
+    <td height="36" valign="top" style="font-size:24px"><?php echo $result3->Party; ?></td>
     </tr>
      <tr>
     <td height="36" valign="top" style="font-size:24px"><div align="left">Post:</div></td>
@@ -117,12 +118,12 @@ document.getElementById('UploadNow').style.display= "block";
 <tr>
   <td></td>
   <td style="font-size:24px">Place of Birth :</td>
-  <td style="font-size:24px"><?php echo $result3->placeofbirth;?></td>
+  <td style="font-size:24px"><?php echo $result3->PlaceOfBirth;?></td>
 </tr>
 <tr>
   <td></td>
   <td style="font-size:24px">Date of Birth:</td>
-  <td style="font-size:24px"><?php echo $result3->dateofbirth;?></td>
+  <td style="font-size:24px"><?php echo $result3->DateOfBirth;?></td>
 </tr>
   </tbody>
 </table>
