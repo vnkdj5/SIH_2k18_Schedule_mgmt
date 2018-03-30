@@ -78,6 +78,8 @@
                         </a>
                     </div>
                 </div>
+               
+                
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-red">
                         <div class="panel-heading">
@@ -100,6 +102,19 @@
                         </a>
                     </div>
                 </div>
+                
+                
             </div>
-            <?php include 'EventCard.php'; ?>
-            <!-- /.row -->
+   
+      
+        <?php include 'EventCard.php';
+ 
+        ?>
+        
+
+          
+                    </div>
+
+ <!-- /.row -->
+            
+    </div>

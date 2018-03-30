@@ -126,7 +126,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                                 </div>
                                
                                 <input type="submit" name="loginMode" class="btn btn-lg btn-success btn-block" value="Login">
-				<a href='signup.php'>Don't have an account? SignUp!</a>
+                                <hr>
+                                <br>
+                                <a href='signup.php'>Don't have an account? SignUp!</a>
                             </fieldset>
                         </form>
                     </div>

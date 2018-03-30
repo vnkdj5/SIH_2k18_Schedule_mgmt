@@ -223,9 +223,10 @@ $office_id=$db->get_var($check);
 //validation
 $check2= 'SELECT * from `designation` where office_id='.$office_id.' and designation_name='.$designation.';';
 $result2=$db->get_row($check2);
-
-if($result2->Minister_ID!="Admin")
+echo $result2->Minister_ID;
+if($result2->Minister_ID=="Admin")
 {
+    
 
 
 $sql1= 'INSERT into `minister_info` (`Minister_ID`,`Name`, `Office_ID`,`Contact`, `Password`, `Email_ID`,`Party`,`DateOfBirth`,`PlaceOfBirth`) values (\''.$username.'\',\''.$name.'\','.$office_id.','.$num.',\''.md5($password).'\',\''.$email.'\',\''.$party.'\',\''.$dateOfBirth.'\',\''.$placeOfBirth.'\');';
@@ -239,6 +240,15 @@ $upResult=$db->query($sql2);
         <script>
     alert("Sign Up Successful.");        
     window.document.location.href="login.php";</script>
+            
+        
+        <?php
+}
+ else {
+      ?>
+        <script>
+    alert("Please enter a valid ministry and designation");        
+    window.document.location.href="signup.php";</script>
             
         
         <?php

@@ -30,6 +30,7 @@
 
 <body>
 -->
+
 <?php
 $date = '';
 if (isset($_GET['d'])) {
@@ -53,10 +54,30 @@ if (isset($_GET['d'])) {
             </label>
             <div style="float: right">
                 <form role="form" method="POST" class="form-inline">
-                    <div class="form-group col-sm-4">
-                        <?php echo "<input name='startDate' type='date' onchange='window.location=\"engagement.php?f=EventCardEngagement&d=\"+this.value' class='form-control' value=" . $date . ">"; ?>
+                    <div class="form-group">
+                        <?php echo "<input id='edate' name='startDate' type='date' onchange='changequery()' class='form-control' value=" . $date . ">"; ?>
                     </div>
-
+                    <div class="form-group">
+                        <select name="time" onchange="changequery()" id='etime'>
+                            <option value='99'>All</option>
+                         <?php
+                        for($i=0;$i<24;$i=$i+1){
+                            echo "<option value='".$i."'";
+                            if(isset($_GET['t'])){
+                                if($i==$_GET['t']){
+                                    echo "selected";
+                                }
+                            }else{
+                                if($i==1){
+                                    echo "selected";
+                                }
+                            }
+                            echo ">".$i."-".(($i+1)%24)."</option>";
+                         }
+                         ?>
+                          </select>
+                        Hrs.
+                    </div>
                 </form>
             </div>
         </div>
@@ -64,7 +85,7 @@ if (isset($_GET['d'])) {
             <div class="panel-group" id="accordion">
 
                 <?php
-                error_reporting(E_ERROR | E_PARSE);
+                //error_reporting(E_ERROR | E_PARSE);
                 if (session_status() == PHP_SESSION_NONE) {
                     session_start();
                     include_once '../private/conn.php';
@@ -76,8 +97,12 @@ if (isset($_GET['d'])) {
                 $qs = '';
 
                 //$qs='calenderschedule';
-$events = $db->get_results("SELECT * FROM create_event inner join guests on create_event.event_id = guests.event_id where guest_id='".$id."' and date='".$_GET['d']."' order by start_time,date");
-
+                if(isset($_GET['t']) && $_GET['t']!=99){
+                    $events = $db->get_results("SELECT * FROM create_event inner join guests on create_event.event_id = guests.event_id where guest_id='".$id."' and date='".$_GET['d']."' and start_time>='".date('H:i:s',mktime($_GET['t'],0,0,date("m"),date("d"),date("Y")))."' and start_time<'". date('H:i:s',mktime($_GET['t']+1,0,0,date("m"),date("d"),date("Y"))) ."' order by start_time,date");
+                   
+                }else{
+                    $events = $db->get_results("SELECT * FROM create_event inner join guests on create_event.event_id = guests.event_id where guest_id='".$id."' and date='".$_GET['d']."' order by start_time,date");
+                }
                 $cards = 0;
                 if($events==NULL){
                     echo "No engagements today!!";
@@ -157,17 +182,17 @@ $events = $db->get_results("SELECT * FROM create_event inner join guests on crea
                                 <div class="panel-footer" style="height:50px;">
                                     <div class="col-sm-12">
                                         <div class="col-xs-4">
-                                     <?php echo "<a href='".$_SESSION['currentpage'].".php?qs=".$qs."&d=".$_GET['d']."&f=EventCardEngagement&eventapproval=1&eventid=".$event->event_id."'> <button type='button' class='btn btn-success btn-rect btn-xl'"; if($event->Status==2){echo "style='border: 2px solid blue'";} echo "><i class='fa fa-check'>Going</i>
+                                     <?php echo "<a href='".$_SESSION['currentpage'].".php?qs=".$qs."&d=".$_GET['d']."&f=EventCardEngagement&eventapproval=1&eventid=".$event->event_id."'> <button type='button' class='btn btn-success btn-rect btn-xl'"; if($event->Status==2){echo "style='border: 2px solid black; box-shadow: 3px 3px 5px black;'";} echo "><i class='fa fa-check'>Going</i>
                                      </button></a>";?>
                                  </div>
                                  <div class="col-xs-4">
                                      
-                                     <?php echo "<a href='".$_SESSION['currentpage'].".php?qs=".$qs."&d=".$_GET['d']."&f=EventCardEngagement&eventinterested=1&eventid=".$event->event_id."'> <button type='button' class='btn btn-info btn-rect btn-xl'"; if($event->Status==1){echo "style='border: 2px solid blue'";} echo "><i class='fa fa-star'>Interested</i>
+                                     <?php echo "<a href='".$_SESSION['currentpage'].".php?qs=".$qs."&d=".$_GET['d']."&f=EventCardEngagement&eventinterested=1&eventid=".$event->event_id."'> <button type='button' class='btn btn-info btn-rect btn-xl'"; if($event->Status==1){echo "style='border: 2px solid black; box-shadow: 3px 3px 5px black;'";} echo "><i class='fa fa-star'>Interested</i>
                                      </button></a>";?>
                                  </div>  
                                  <div class="col-xs-4">
                                     
-                                      <?php echo "<a href='".$_SESSION['currentpage'].".php?qs=".$qs."&d=".$_GET['d']."&f=EventCardEngagement&eventdisapprove=1&eventid=".$event->event_id."'> <button type='button' class='btn btn-warning btn-rect btn-xl'"; if($event->Status==0){echo "style='border: 2px solid blue'";} echo "><i class='fa fa-times'>Not Interested</i>
+                                      <?php echo "<a href='".$_SESSION['currentpage'].".php?qs=".$qs."&d=".$_GET['d']."&f=EventCardEngagement&eventdisapprove=1&eventid=".$event->event_id."'> <button type='button' class='btn btn-warning btn-rect btn-xl'"; if($event->Status==0){echo "style='border: 2px solid black; box-shadow: 3px 3px 5px black;'";} echo "><i class='fa fa-times'>Not Interested</i>
                                      </button></a>";?>
                                 </div>
                                     </div>

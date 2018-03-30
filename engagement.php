@@ -9,18 +9,18 @@
         $_SESSION['currentpage']='engagement';
         if(isset($_GET['eventapproval'])){
             $db->query("UPDATE guests SET Status=2 WHERE event_id = '".$_GET['eventid']."' and guest_id='".$_SESSION['id']."'");
-            header("location:".$_SESSION['currentpage'].".php?f=".$_GET['f']);
+            header("location:".$_SESSION['currentpage'].".php?f=".$_GET['f']."&d=".$_GET['d']);
             
         }elseif (isset($_GET['eventinterested'])) {
             $db->query("UPDATE guests SET Status=1 WHERE event_id = '".$_GET['eventid']."' and guest_id='".$_SESSION['id']."'");
-            header("location:".$_SESSION['currentpage'].".php?f=".$_GET['f']);
+            header("location:".$_SESSION['currentpage'].".php?f=".$_GET['f']."&d=".$_GET['d']);
         }elseif (isset($_GET['eventdisapprove'])) {
             $db->query("UPDATE guests SET Status=0 WHERE event_id = '".$_GET['eventid']."' and guest_id='".$_SESSION['id']."'");
-            header("location:".$_SESSION['currentpage'].".php?f=".$_GET['f']);
+            header("location:".$_SESSION['currentpage'].".php?f=".$_GET['f']."&d=".$_GET['d']);
         }elseif (isset($_GET['rmconfirmed'])){
             
             $db->query("UPDATE guests SET Status=0 WHERE event_id = '".$_GET['eventid']."' and guest_id='".$_SESSION['id']."'");
-            header("location:".$_SESSION['currentpage'].".php?f=".$_GET['f']); 
+            header("location:".$_SESSION['currentpage'].".php?f=".$_GET['f']."&d=".$_GET['d']); 
         }
             
 ?>
@@ -60,7 +60,15 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+<script>
+    function changequery(){
+        var date = document.getElementById("edate").value;
+        var time = document.getElementById("etime").value;
+        
+        window.location="engagement.php?f=EventCardEngagement&d="+date+"&t="+time;
+    }
+    
+</script>
 </head>
 <body>
 

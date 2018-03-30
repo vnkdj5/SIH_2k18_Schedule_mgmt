@@ -28,7 +28,7 @@ include('mailsih.php');
 ?>
 			<script>
 			window.alert("The mail has been sent!!:)");
-                     window.location.href="updateEvent.php?eventid=<?php echo $event_id;?>";
+		    //window.document.location.href="add_invites.php";
 			</script> 
 <?php
 		}

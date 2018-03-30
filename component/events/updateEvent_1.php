@@ -1,6 +1,6 @@
 <?php
       include('private/conn.php');
-      $event_id=$_GET['eventid'];
+      $event_id=E1234567898765;//$_GET['eventid'];
 ?>
 
 <html>
@@ -96,7 +96,7 @@
                 </div>
                 <div id="page-content">  
 <?php 
-      $sql="select * from create_event where event_id='$event_id'";
+      $sql="select * from create_event where event_id='E1234567898765'";
       $ans=$db->get_row($sql);
       
 ?>

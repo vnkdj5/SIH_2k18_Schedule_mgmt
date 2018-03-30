@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <?php
 require_once('private/conn.php');
+
 session_start();
 include('mailsih.php');
   if($_SERVER["REQUEST_METHOD"] == "POST")
 	{
 		#echo "HEY";
 		$id = $_POST["id"];
-		$event_id=$_GET["eventid"];
+		$event_id=$_SESSION["event_id"];
 		
 		for($x = 0; $x < count($id); $x++)
 		$insert = 'INSERT INTO `guests` VALUES  (\''.$event_id.'\', \''.$id[$x].'\' , 0) ;';
@@ -28,9 +29,9 @@ include('mailsih.php');
 ?>
 			<script>
 			window.alert("The mail has been sent!!:)");
-                     window.location.href="updateEvent.php?eventid=<?php echo $event_id;?>";
+		    //window.document.location.href="add_invites.php";
 			</script> 
 <?php
 		}
 	}		     
-?>
+?>		

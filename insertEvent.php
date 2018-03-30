@@ -12,7 +12,7 @@ if($_POST)
     $end_time=$_POST["end_time"];
     $category=$_POST["category"];
     $event_id=uniqid('E',false);
-    $_SESSION["event_id"]=$event_id;
+   
     
     $venue=$_POST["venue"];
     
@@ -24,9 +24,12 @@ if($_POST)
         if($insertRes)
         {
             echo "EventInserted";
-            echo "<script> window.location.assign('add_invites.php')</script>";   //Chnged
-            //echo "<script> window.location.assign('mailsih.php/?key=".$event_id."')</script>";
-    
+            ?>
+            <script>
+                alert("Event Inserted");
+            window.location.href="updateEvent.php?eventid=<?php echo $event_id;?>";
+            </script>
+    <?php
         }
           else
             {

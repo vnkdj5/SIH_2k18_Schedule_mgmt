@@ -65,12 +65,12 @@
             <li>
                 <a href="#" "><i class="glyphicon glyphicon-tasks"></i> Engagements<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li>
-                        <a href="engagement.php?f=EventCardEngagement">All Events</a>
-                    </li>
-                    <li>
-                        <a href="engagement.php?f=MyEventCard" >Confirmed Events</a>
-                    </li>
+                     <li>
+                                    <?php echo "<a href='engagement.php?f=EventCardEngagement&d=".date('Y-m-d')."'>All Events</a>"; ?>
+                                </li>
+                                <li>
+                                    <?php echo "<a href='engagement.php?f=MyEventCard&d=".date('Y-m-d')."'>Confirmed Events</a>"; ?>
+                                </li>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
