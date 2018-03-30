@@ -5,7 +5,10 @@
 	{
 		header("location:login.php");
 	}
+        if(!isset($db))
+        {
 	include_once("private/conn.php");
+        }
         $_SESSION['currentpage']='index';
         if(isset($_GET['eventapproval'])){
             $db->query("UPDATE guests SET Status=2 WHERE event_id = '".$_GET['eventid']."' and guest_id='".$_SESSION['id']."'");

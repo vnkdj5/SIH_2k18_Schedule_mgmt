@@ -2,7 +2,7 @@
                   <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Welcome <?php echo $_SESSION["userName"]; ?></h1>
-                    
+                   <?php include_once("private/conn.php"); ?>
                 </div>
                 <!-- /.col-lg-12 -->
                 </div>
@@ -15,8 +15,8 @@
                                     <i class="fa fa-tag fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">5</div>
-                                    <div>Today</div>
+                                    <div class="huge"><?php $count=$db->get_var("SELECT count(*) FROM `create_event` where date = ".date('Y-m-d',strtotime('today'))." and host_id='$id' or event_id in (select event_id from guests where guest_id='$id')"); echo $count;?></div>
+                                    <div>Today</div> 
                                 </div>
                             </div>
                         </div>
@@ -37,7 +37,7 @@
                                     <i class="fa fa-tags fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">8</div>
+                                    <div class="huge"><?php $count1=$db->get_var("SELECT count(*) FROM `create_event` where date = ".date("Y-m-d", strtotime("+1 day",  strtotime("today")))." and host_id='$id' or event_id in (select event_id from guests where guest_id='$id')"); echo $count1;?></div>
                                     <div>Tomorrow</div>
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                                     <i class="fa fa-list fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">30</div>
+                                    <div class="huge"><?php $count=$db->get_var("SELECT count(*) FROM `create_event` where date >= ".date('Y-m-d',strtotime('today'))."  and date <= ".date("Y-m-d", strtotime("+7 day",  strtotime("today")))." and host_id='$id' or event_id in (select event_id from guests where guest_id='$id')"); echo $count;?></div>
                                     <div>This Week</div>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                                     <i class="fa fa-list-alt fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">10</div>
+                                    <div class="huge"></div>
                                     <div>Calendar</div>
                                 </div>
                             </div>

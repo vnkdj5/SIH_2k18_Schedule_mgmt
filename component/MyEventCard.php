@@ -56,7 +56,7 @@ if (isset($_GET['d'])) {
                 <div style="float: right">
                     <form role="form" method="POST" class="form-inline">
                         <div class="form-group col-sm-4">
-<?php echo "<input name='startDate' type='date' onchange='window.location=\"engagement.php?f=MyEventCard&d=\"+this.value' class='form-control' value=" . $date . ">"; ?>
+                            <?php echo "<input name='startDate' type='date' onchange='window.location=\"engagement.php?f=MyEventCard&d=\"+this.value' class='form-control' value=" . $date . ">"; ?>
                         </div>
 
                     </form>
@@ -64,19 +64,19 @@ if (isset($_GET['d'])) {
             </div>
             <div class="panel-body">
                 <div class="panel-group" id="accordion">
-<?php
-if (!isset($_SESSION)) {
-    session_start();
-    include_once '../private/conn.php';
-}
-$id = $_SESSION['id'];
-$events = $db->get_results("(SELECT * FROM create_event WHERE host_id='" . $id . "'  and date = '" . $date . "') union (SELECT * FROM create_event WHERE event_id in (SELECT event_id FROM guests WHERE guest_id='" . $id . "' AND Status = 2) and date = '" . $date . "') order by start_time");
-$cards = 0;
-if ($events == NULL) {
-    echo 'no events confirmed today';
-} else {
-    foreach ($events as $event) {
-        ?> 
+                    <?php
+                    if (!isset($_SESSION)) {
+                        session_start();
+                        include_once '../private/conn.php';
+                    }
+                    $id = $_SESSION['id'];
+                    $events = $db->get_results("(SELECT * FROM create_event WHERE host_id='" . $id . "'  and date = '" . $date . "') union (SELECT * FROM create_event WHERE event_id in (SELECT event_id FROM guests WHERE guest_id='" . $id . "' AND Status = 2) and date = '" . $date . "') order by start_time");
+                    $cards = 0;
+                    if ($events == NULL) {
+                        echo 'no events confirmed today';
+                    } else {
+                        foreach ($events as $event) {
+                            ?> 
                             <div class="row" style="padding: 5px">
                                 <div class="col-lg-12">
                                     <div class="col-sm-12 col-lg-12"> 
@@ -85,25 +85,25 @@ if ($events == NULL) {
                                             <div class="panel-heading" style="height: 50px;">
 
                                                 <h4 class="panel-title" style="font-size: 25px">
-        <?php echo "<a data-toggle='collapse' data-parent='#accordion' href='#card" . $cards . "'>" . $event->title . "</a>"; ?>
+                                                    <?php echo "<a data-toggle='collapse' data-parent='#accordion' href='#card" . $cards . "'>" . $event->title . "</a>"; ?>
                                                 </h4>
 
                                             </div>
-        <?php
-        if ($cards == 0) {
-            echo "<div id='card" . $cards . "' class='panel-collapse collapse in'>";
-        } else {
-            echo "<div id='card" . $cards . "' class='panel-collapse collapse'>";
-        }
-        $cards = $cards + 1;
-        ?>
+                                            <?php
+                                            if ($cards == 0) {
+                                                echo "<div id='card" . $cards . "' class='panel-collapse collapse in'>";
+                                            } else {
+                                                echo "<div id='card" . $cards . "' class='panel-collapse collapse in'>";
+                                            }
+                                            $cards = $cards + 1;
+                                            ?>
                                             <div class="panel-body" >
                                                 <div class="col-sm-12 col-xs-12">
                                                     <div class="col-xs-6">
                                                         Venue
                                                     </div>
                                                     <div class="col-xs-6">
-        <?php echo $event->venue; ?>
+                                                        <?php echo $event->venue; ?>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12 col-xs-12">
@@ -111,7 +111,7 @@ if ($events == NULL) {
                                                         Date
                                                     </div>
                                                     <div class="col-xs-6">
-        <?php echo $event->date; ?>
+                                                        <?php echo $event->date; ?>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12 col-xs-12" >
@@ -119,7 +119,7 @@ if ($events == NULL) {
                                                         Start Time 
                                                     </div>
                                                     <div class="col-xs-6">
-        <?php echo $event->start_time; ?>
+                                                        <?php echo $event->start_time; ?>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12 col-xs-12">
@@ -127,7 +127,7 @@ if ($events == NULL) {
                                                         End Time
                                                     </div>
                                                     <div class="col-xs-6">
-        <?php echo $event->end_time; ?>
+                                                        <?php echo $event->end_time; ?>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12 col-xs-12">
@@ -135,7 +135,7 @@ if ($events == NULL) {
                                                         Description
                                                     </div>
                                                     <div class="col-xs-6">
-        <?php echo $event->description; ?>
+                                                        <?php echo $event->description; ?>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12 col-xs-12">
@@ -146,17 +146,17 @@ if ($events == NULL) {
                                                         <a href="#">Click to View Guest List</a>
                                                     </div>
                                                 </div>
-                                              <!-- EVENT CARD REPORT LINK  
-                                                <div class="col-sm-12 col-xs-12">
-                                                    <div class="col-xs-6">
-                                                        Report Link
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <a href="#">Click to View Report</a>
-                                                    </div>
-                                                </div>
+                                                <!-- EVENT CARD REPORT LINK  
+                                                  <div class="col-sm-12 col-xs-12">
+                                                      <div class="col-xs-6">
+                                                          Report Link
+                                                      </div>
+                                                      <div class="col-xs-6">
+                                                          <a href="#">Click to View Report</a>
+                                                      </div>
+                                                  </div>
                                                 -->
-                                                
+
                                             </div>
                                         </div>
                                         <div class="panel-footer" style="height:50px;">
@@ -168,9 +168,9 @@ if ($events == NULL) {
 
                                                 </div>  
                                                 <div class="col-xs-4" style="padding-left: 10%">
-                                                    <?php echo "<a href='engagement.php?d=" . $date. "&f=MyEventCard&rmconfirmed=1&eventid=" . $event->event_id . "'>"; ?><button type="button" class="btn btn-danger btn-rect btn-xl"><i class="fa fa-times">Remove</i>
-                                            </button></a>
-                                                    
+                                                    <?php echo "<a href='engagement.php?d=" . $date . "&f=MyEventCard&rmconfirmed=1&eventid=" . $event->event_id . "'>"; ?><button type="button" class="btn btn-danger btn-rect btn-xl"><i class="fa fa-times">Remove</i>
+                                                    </button></a>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -180,8 +180,9 @@ if ($events == NULL) {
 
                             </div>
                         </div>
-    <?php }
-} ?>
+                    <?php }
+                }
+                ?>
             </div>
         </div>
     </div>

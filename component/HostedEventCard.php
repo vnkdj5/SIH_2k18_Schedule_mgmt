@@ -93,7 +93,7 @@ if ($events == NULL) {
         if ($cards == 0) {
             echo "<div id='card" . $cards . "' class='panel-collapse collapse in'>";
         } else {
-            echo "<div id='card" . $cards . "' class='panel-collapse collapse'>";
+            echo "<div id='card" . $cards . "' class='panel-collapse collapse in'>";
         }
         $cards = $cards + 1;
         ?>

@@ -129,7 +129,7 @@ if (isset($_GET['d'])) {
                                     if ($cards == 0) {
                                         echo "<div id='card" . $cards . "' class='panel-collapse collapse in'>";
                                     } else {
-                                        echo "<div id='card" . $cards . "' class='panel-collapse collapse'>";
+                                        echo "<div id='card" . $cards . "' class='panel-collapse collapse in'>";
                                     }
                                     $cards = $cards + 1;
                                     ?>
@@ -182,7 +182,7 @@ if (isset($_GET['d'])) {
                                 <div class="panel-footer" style="height:50px;">
                                     <div class="col-sm-12">
                                         <div class="col-xs-4">
-                                     <?php echo "<a href='".$_SESSION['currentpage'].".php?qs=".$qs."&d=".$_GET['d']."&f=EventCardEngagement&eventapproval=1&eventid=".$event->event_id."'> <button type='button' class='btn btn-success btn-rect btn-xl'"; if($event->Status==2){echo "style='border: 2px solid black; box-shadow: 3px 3px 5px black;'";} echo "><i class='fa fa-check'>Going</i>
+                                     <?php echo "<a href='".$_SESSION['currentpage'].".php?qs=".$qs."&d=".$_GET['d']."&f=EventCardEngagement&eventapproval=1&eventid=".$event->event_id."'> <button type='button' class='button inverted red'"; if($event->Status==2){echo "style='border: 2px solid black; box-shadow: 3px 3px 5px black;'";} echo "><i class='fa fa-check'>Going</i>
                                      </button></a>";?>
                                  </div>
                                  <div class="col-xs-4">

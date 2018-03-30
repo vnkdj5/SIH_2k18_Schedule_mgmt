@@ -16,7 +16,7 @@ try {
     echo $host->Name;
     $title=$db->get_row('select `title` from `create_event` where `event_id`=\''.$event_id.'\';');
     
-    $desc=$db->get_row('select `description` from `create_event` where `event_id`=\''.$event_id.'\';');
+    $desc=$db->get_row('select `description`,`date`,`venue` from `create_event` where `event_id`=\''.$event_id.'\';');
 	$arrlength=count($email);
 	
 	echo "\nCount ";
@@ -28,7 +28,7 @@ try {
 	echo '\n';
 	echo 'Email-id ';
 	echo $name;		
-		$actual=$db->get_row('SELECT `Name` from `minister_info`  where `Email_ID`=\''.$name.'\';');
+		$actual=$db->get_row('SELECT `Name`,`Contact` from `minister_info`  where `Email_ID`=\''.$name.'\';');
 	
     echo '\nACtual NAme : '.$actual->Name;
     echo '\n';
@@ -82,6 +82,11 @@ try {
         
     
     </div></body></html>';
+     include_once 'way2sms-api.php';
+        
+    $sms_body='Hello '.  $actual->Name.'!'.  $host->Name.' had invited you for:'.$title->title.' Date: '.$desc->date.' Venue: '.$desc->venue;
+    $mobile=$actual->Contact;
+    sendSMS($mobile,$sms_body);
     //Server settings
     $mail->SMTPDebug = 0;                                 // Enable verbose debug output
     $mail->isSMTP();                                      // Set mailer to use SMTP
