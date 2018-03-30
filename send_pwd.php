@@ -6,7 +6,7 @@
 if(isset($_POST['submit_email']) && $_POST['email'])
 {
   $email=$_POST['email'];
-  $pass='select `Password` from `minister_info` where `Email_id`=\''.$email.'\';';
+  $pass='select `Password` from `minister_info` where `Email_ID`=\''.$email.'\';';
   
   $charset="ABCDEFGHIJKLMNOPQRSTUVWXYZqwertyuioplkjhgfdsazxcvbnm1023654789";
   $gpassword=substr(str_shuffle($charset),0,5);
@@ -42,7 +42,7 @@ if(isset($_POST['submit_email']) && $_POST['email'])
       echo " Check Your Email";
        $gpassword=md5($gpassword);
   
-        $db->query('update `minister_info` set `Password`=\''.$gpassword.'\' where `Email_id`=\''.$email.'\';');
+        $db->query('update `minister_info` set `Password`=\''.$gpassword.'\' where `Email_ID`=\''.$email.'\';');
         echo "<script>alert('check your mail');window.document.location.href = 'login.php';</script>";
     }
     else
