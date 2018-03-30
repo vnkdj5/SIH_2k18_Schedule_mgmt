@@ -1,6 +1,7 @@
 
 <?php
     include_once('private/conn.php');
+    include 'connect.php';
 ?>
 <html>
 
@@ -135,8 +136,17 @@ var phoneno = /^\d{10}$/;
                                  <div class="form-group">
                                 
 				<div class="form-group">
-                                    <input class="form-control" id="num" onchange="fun()" placeholder="Mobile number" name="num" type="Number" value="" 				pattern="/(7|8|9)\d{9}/" minlength=10 maxlength=10 required>
+                                    <input class="form-control" id="num" onchange="fun()" placeholder="Mobile number" name="num" type="number" value="" 				pattern="/(7|8|9)\d{9}/" minlength=10 maxlength=10 required>
 				      				<div id="mobile_error" style="color:red;"></div>
+                                </div>
+<div class="form-group">
+                                    <input class="form-control" placeholder="Party" name="party" type="text" value="" 				required>
+                                </div>
+				<div class="form-group">
+                                    <input class="form-control" placeholder="dd/mm/yyyy" name="dateOfBirth" type="date" data-provide="datepicker" value="" 				required>
+                                </div>
+				<div class="form-group">
+                                    <input class="form-control" placeholder="Birth Place" name="placeOfBirth" type="text" value="" 				required>
                                 </div>
 
 
@@ -145,11 +155,10 @@ var phoneno = /^\d{10}$/;
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Password" name="password" type="password" value="" 				required>
                                 </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">&nbsp;&nbsp;I accept all terms and conditions.
-                                    </label>
-                                </div>
+
+				
+
+                                
                                 <!-- Change this to a button or input when using this as a form -->
                                 <input type="submit" class="btn btn-lg btn-success btn-block" value="Sign up" >
                             </fieldset>
@@ -174,19 +183,21 @@ var phoneno = /^\d{10}$/;
 </body>	
 
 <?php
-$conn = new mysqli("localhost", "root", "", "schedule_mgmt");
+//$conn = new mysqli("localhost", "root", "", "schedule_mgmt");
 
 if($_SERVER['REQUEST_METHOD']=='POST')
 {
 
-$name =$_POST['num'];
+$name =$_POST['name'];
 $ministry =$_POST['ministry'];
 $designation=$_POST['designation'];
 $username =$_POST['username'];
 $password =$_POST['password'];
 $email =$_POST['email'];
 $num=$_POST['num'];
-
+$party =$_POST['party'];
+$dateOfBirth =$_POST['dateOfBirth'];
+$placeOfBirth =$_POST['placeOfBirth'];
 $checksql = 'SELECT * from `minister_info` where Minister_ID=\''.$username.'\';';
 $result = mysqli_query($conn,$checksql);
 $check = mysqli_fetch_assoc($result);
@@ -200,17 +211,23 @@ if(isset($check)){
 else
 {
 //remove did
-$sql1= 'INSERT into `minister_info` (`Minister_ID`,`Designation_ID` ,`Name`, `Contact`, `Password`, `Email_ID`) values (\''.$username.'\',1,\''.$name.'\','.$num.',\''.md5($password).'\',\''.$email.'\');';
-//echo $sql1;
-mysqli_query($conn,$sql1);
 
-$check= 'SELECT office_id from `ministryoffice` where office_name=\''.$ministry.'\';';
+
+$check= 'SELECT Office_ID from `ministryoffice` where office_name=\''.$ministry.'\';';
 $result=mysqli_query($conn,$check);
 $row = $result->fetch_assoc();
 //echo $row['office_id'];
-$sql2= 'INSERT into `designation` values (\''.$username.'\',\''.$ministry.'\','.$row['office_id'].');';
+$sql1= 'INSERT into `minister_info` (`Minister_ID`,`Name`, `Office_ID`,`Contact`, `Password`, `Email_ID`,`Party`,`DateOfBirth`,`PlaceOfBirth`) values (\''.$username.'\',\''.$name.'\','.$row['office_id'].','.$num.',\''.md5($password).'\',\''.$email.'\',\''.$party.'\',\''.$dateOfBirth.'\',\''.$placeOfBirth.'\');';
+//echo $sql1;
+mysqli_query($conn,$sql1);
+$sql2= 'UPDATE `designation` SET Minister_ID = \''.$username.'\' WHERE designation_name = \''.$designation.'\' AND Office_ID = '.$row['office_id'].' ;';
 //echo $sql2;
 mysqli_query($conn,$sql2);
+?>
+    <script> 
+    alert("Signup Successful.");    
+    document.href="login.php"</script>    
+        <?php
 
 }
 
