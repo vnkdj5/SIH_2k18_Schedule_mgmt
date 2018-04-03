@@ -70,10 +70,8 @@ try {
                      $title->title. 
                 '</div>
                 <div align="left">
-                    Description:
+                    The event has been cancelled.
                 </div>
-                <div align="center">
-                    '.  $desc->description . 'The details have been changed.                </div>
                 <a href="#">Click here to go dashboard"</a>
                 
                 </div>

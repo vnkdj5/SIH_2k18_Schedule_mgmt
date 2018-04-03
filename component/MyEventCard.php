@@ -143,7 +143,7 @@ if (isset($_GET['d'])) {
                                                         Guest Link
                                                     </div>
                                                     <div class="col-xs-6">
-                                                        <a href="#">Click to View Guest List</a>
+                                                        <a href="link_of_invitees.php?event_id=<?php echo "$event->event_id"?>">Click to View Guest List</a>
                                                     </div>
                                                 </div>
                                                 <!-- EVENT CARD REPORT LINK  

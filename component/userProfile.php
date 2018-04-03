@@ -25,12 +25,15 @@
 
 <BODY>
 -->
+
+
+
 <?php
 
 
 require_once('private/conn.php');
 $id=$_SESSION["id"];
-//$id = 'surbhi1';
+//$id = 'M3105';
 $result3 = $db->get_row('SELECT * FROM minister_info where Minister_ID= \''.$id.'\'');
 $result2 = $db->get_row('SELECT * FROM designation where Minister_ID= \''.$id.'\'');
 $result1 = $db->get_row('SELECT * FROM ministryoffice WHERE office_id IN (SELECT Office_ID from designation WHERE Minister_ID = \''.$id.'\')');
@@ -47,6 +50,11 @@ $emailId=$result3->Email_ID;
 $contact=$result3->Contact;
 $ministerId=$result3->Minister_ID;
 error_reporting(1);
+
+if(isset($_POST["removeministry"]))
+{
+$db->query("DELETE FROM Accessibility where access_id='".$id."' and grant_id =  '".$_POST['removeministry']."'");
+}
 ?>
 
 
@@ -127,6 +135,164 @@ document.getElementById('UploadNow').style.display= "block";
 </tr>
   </tbody>
 </table>
+
+
+<div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Grant Access To
+                        </div>
+                        <div class="panel-body">
+      
+
+<?php
+
+
+
+
+if(isset($_GET["ShowDescription"]))
+{
+
+
+$res = $db->get_row("SELECT Minister_ID FROM `designation` WHERE designation_name='".$_GET["people"]."' AND Office_ID IN (SELECT office_id FROM ministryoffice WHERE 
+office_name = '".$_GET["ministry"]."')");
+$var = $db->get_row("SELECT * FROM Accessibility where access_id = '".$id."' and grant_id = '".$res->Minister_ID."'");
+if($var==NULL)
+{$db->query("INSERT INTO Accessibility VALUES ('".$id."','".$res->Minister_ID."',1)");}
+else
+{$db->query("UPDATE Accessibility set description = 1 where access_id = '".$id."' and grant_id = '".$res->Minister_ID."'");}
+}
+
+
+
+else
+{
+if(isset($_GET["ministry"]))
+{
+$res = $db->get_row("SELECT Minister_ID FROM `designation` WHERE designation_name='".$_GET["people"]."' AND Office_ID IN (SELECT office_id FROM ministryoffice WHERE office_name = '".$_GET["ministry"]."')");
+
+$var = $db->get_row("SELECT * FROM Accessibility where access_id = '".$id."' and grant_id = '".$res->Minister_ID."'");
+if($var==NULL)
+{$db->query("INSERT INTO Accessibility VALUES ('".$id."','".$res->Minister_ID."',0)");}
+else
+{$db->query("UPDATE Accessibility set description = 0 where access_id = '".$id."' and grant_id = '".$res->Minister_ID."'");}
+}
+}
+?>
+                      
+<form action = "Profile.php" method= "GET">
+ <label>Search Ministry:</label> 
+    <select name="ministry" class="ministry">
+    <option selected="selected">--Select wing--</option>
+    <?php
+        $stmt = $db->get_results("SELECT office_name FROM ministryoffice");
+        
+echo $stmt;
+        foreach($stmt as $row)
+        {
+    ?>
+    <option value="<?php echo $row->office_name; ?>"><?php echo $row->office_name; ?></option>
+    <?php
+        } 
+    ?>
+    </select>
+    <label>People:</label> 
+    <select name="people" class="people">
+        <option selected="selected">--Select--</option>
+    </select>
+    <img src="ajax-loader.gif" id="loding1"></img>
+<input type = "checkbox" value = "ShowDescription" name = "ShowDescription"/>Show Description
+    <input type = "submit" value = "Go"/>
+
+</form>
+                        </div>
+                        <div class="panel-footer">
+                          Accessibility Given To
+
+
+ <div class="table-responsive">
+<?php
+$res1 = $db->get_Results("Select * from minister_info inner join Accessibility on minister_info.Minister_ID =  Accessibility.grant_id where access_id = '".$id."'  ");
+?>
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Granted_To</th>
+                                            <th>Description_Permission</th>
+                    
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+<?php
+
+$i = 0;
+foreach($res1 as $user)
+{
+echo '<tr>
+                                            <td>'.$i.'</td>
+                                            <td>'.$user->Name.'</td>
+                                            <td>'.$user->description.'</td>
+                                           
+                                        </tr>';
+$i = $i+1;
+}?>
+                                        
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+
+
+
+
+ <form role="form" method="POST" class="form-inline" style="margin-bottom: 20px;">
+			    <label>Remove Access For:</label> 
+    <select name="removeministry" class="ministry">
+    <option selected="selected">--Select--</option>
+    <?php
+        $stmt = $db->get_results("SELECT * FROM Accessibility WHERE access_id = '".$id."'");
+        
+
+        foreach($stmt as $row)
+        {
+$result3 = $db->get_row('SELECT * FROM minister_info where Minister_ID= \''.$row->grant_id.'\'');
+
+$result2 = $db->get_row('SELECT * FROM ministryoffice where office_id= \''.$result3->Office_ID.'\'');
+$result1 = $db->get_row('SELECT * FROM designation where office_id= \''.$result3->Office_ID.'\' AND Minister_ID= \''.$row->access_id.'\'');
+$temp1 = $_POST["ministry"];
+if($temp1!=NULL && $temp1== $result3->Minister_ID ."&". $row->description){
+    ?>
+    <option value="<?php echo $result3->Minister_ID ; ?>" selected><?php echo $result3->Name ."-".  $result2->office_name ."-". $result1->designation_name; ?></option>
+    <?php
+	
+        } 
+else{
+
+?>
+    <option value="<?php echo $result3->Minister_ID ; ?>" ><?php echo $result3->Name ."-".  $result2->office_name ."-". $result1->designation_name; ?></option>
+    <?php
+}
+}
+    ?>
+    </select>
+    <input type = "submit" value="remove"/>
+
+</form>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-lg-4 -->
+
+
+
+
+ 
+</div>
+
 </div>
 </div>
 
@@ -134,7 +300,7 @@ document.getElementById('UploadNow').style.display= "block";
 <p align="center"><a href="index.php"></a></p>
 
 <br/>
-<!--
+
 </BODY>
 </HTML>
--->
+

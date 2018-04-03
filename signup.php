@@ -224,8 +224,7 @@ $office_id=$db->get_var($check);
 $check2= 'SELECT * from `designation` where office_id='.$office_id.' and designation_name='.$designation.';';
 $result2=$db->get_row($check2);
 echo $result2->Minister_ID;
-if($result2->Minister_ID=="Admin")
-{
+//if($result2->Minister_ID=="Admin")
     
 
 
@@ -241,20 +240,15 @@ $upResult=$db->query($sql2);
     alert("Sign Up Successful.");        
     window.document.location.href="login.php";</script>
             
-        
-        <?php
-}
- else {
-      ?>
-        <script>
-    alert("Please enter a valid ministry and designation");        
-    window.document.location.href="signup.php";</script>
+     
+
             
         
         <?php
 }
 }
-}
+
 ?>
 </html>
+
 

@@ -13,6 +13,6 @@ $a=$_POST['end_time'];
 
 <html>
 	<head>
-		<script> window.location.href='updateEvent.php?eventid='<?php echo $event_id?></script>
+		<script> window.location.href='updateEvent.php?eventid=<?php echo $_GET['eventid']?>'</script>
 	</head>
 </html>

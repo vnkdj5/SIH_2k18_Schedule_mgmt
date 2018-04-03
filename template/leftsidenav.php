@@ -22,13 +22,12 @@
                     error_reporting(0);
                     if (session_status() == PHP_SESSION_NONE) {
                         session_start();
-}                   
-                    
+                    }
+
                     $id = $_SESSION["id"];
 //$id = 'surbhi1';
-                    $picture=$_SESSION["userPicture"];
-                    if(isset($picture))
-                    {
+                    $picture = $_SESSION["userPicture"];
+                    if (isset($picture)) {
                         echo '<center><img class="img-thumbnail" style="max-width:50%;" alt="No Image Found" src="data:image/jpeg;base64,' . base64_encode($picture) . '"/></center>';
                     }
                     if (isset($_SESSION)) {
@@ -65,37 +64,34 @@
             <li>
                 <a href="#" "><i class="glyphicon glyphicon-tasks"></i> Engagements<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                     <li>
-                                    <?php echo "<a href='engagement.php?f=EventCardEngagement&d=".date('Y-m-d')."'>All Events</a>"; ?>
-                                </li>
-                                <li>
-                                    <?php echo "<a href='engagement.php?f=MyEventCard&d=".date('Y-m-d')."'>Confirmed Events</a>"; ?>
-                                </li>
+                    <li>
+                        <?php echo "<a href='engagement.php?f=EventCardEngagement&d=" . date('Y-m-d') . "'>All Events</a>"; ?>
+                    </li>
+                    <li>
+                        <?php echo "<a href='engagement.php?f=MyEventCard&d=" . date('Y-m-d') . "'>Confirmed Events</a>"; ?>
+                    </li>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
             <li>
-                <a href="createEvent.php" onclick="loadDoc('form1.html')" ><i class="glyphicon glyphicon-plus"></i> Create Event</a>
+                <a href="createEvent.php" ><i class="glyphicon glyphicon-plus"></i> Create Event</a>
             </li>
             <li>
                 <a href="generateReports.php"><i class="fa fa-edit fa-fw"></i> Generate Reports</a>
             </li>
-            <li>
-                <a href="Profile.php"><i class="fa fa-wrench fa-fw"></i> Profile</a>
+            <?php
+            if ($_SESSION["userType"] == "MINISTER") {
+                ?>
 
-                <!-- /.nav-second-level -->
-            </li>
+                <li>
+                    <a href="Profile.php"><i class="fa fa-wrench fa-fw"></i> Profile</a>
 
+                    <!-- /.nav-second-level -->
+                </li>
+<?php } ?>
             <li>
-                <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a href="blank.html">Blank Page</a>
-                    </li>
-                    <li>
-                        <a href="login.html">Login Page</a>
-                    </li>
-                </ul>
+                <a href="otherReport.php"><i class="fa fa-files-o fa-fw"></i> Others' Report</a>
+
                 <!-- /.nav-second-level -->
             </li>
         </ul>

@@ -42,8 +42,36 @@
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+    <![endif]--><script  type="text/javascript" src="vendor/jquery/jquery.min.js"></script>
+    
+<script type="text/javascript">
+$(document).ready(function()
+{
+    $("#loding1").hide();
+    $("#loding2").hide();
+    $(".ministry").change(function()
+    {
+        $("#loding1").show();
+        var id=$(this).val();
+        var dataString = 'id='+ id;
+        $(".people").find('option').remove();
+        
+            $.ajax
+                ({
+                    type: "POST",
+                    url: "get_people.php",
+                    data: dataString,
+                    cache: false,
+                    success: function(html)
+                    {
+                        $("#loding1").hide();
+                        $(".people").html(html);
+                    } 
+                });
+            });
+    
+ }); 
+</script>
 </head>
 <body>
 

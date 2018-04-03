@@ -56,7 +56,7 @@ if (isset($_GET['d'])) {
                 <div style="float: right">
                     <form role="form" method="POST" class="form-inline">
                         <div class="form-group col-sm-4">
-<?php echo "<input name='startDate' type='date' onchange='window.location=\"engagement.php?f=MyEventCard&d=\"+this.value' class='form-control' value=" . $date . ">"; ?>
+<?php echo "<input name='startDate' type='date' onchange='window.location=\"engagement.php?f=HostedEventCard&d=\"+this.value' class='form-control' value=" . $date . ">"; ?>
                         </div>
 
                     </form>
@@ -70,7 +70,7 @@ if (!isset($_SESSION)) {
     include_once '../private/conn.php';
 }
 $id = $_SESSION['id'];
-$events = $db->get_results("(SELECT * FROM create_event WHERE host_id='" . $id . "'  and date = '" . $date . "') union (SELECT * FROM create_event WHERE event_id in (SELECT event_id FROM guests WHERE guest_id='" . $id . "' AND Status = 2) and date = '" . $date . "') order by start_time");
+$events = $db->get_results("(SELECT * FROM create_event WHERE host_id='" . $id . "'  and date = '" . $date . "') order by start_time");
 $cards = 0;
 if ($events == NULL) {
     echo 'No events confirmed today';

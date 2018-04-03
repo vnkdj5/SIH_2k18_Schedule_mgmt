@@ -107,9 +107,12 @@ if (isset($_GET['d'])) {
                 if($events==NULL){
                     echo "No engagements today!!";
                 }else{
+?>
+ <ul id="items">
+<?php
                 foreach ($events as $event) {
                     ?>  
-
+		<li>
 
                     <div class="row" style="padding: 5px">
                         <div class="col-lg-12">
@@ -203,15 +206,44 @@ if (isset($_GET['d'])) {
                         </div>
                     </div>
             </div>
-          
+          </li>
 
-<?php }}?>
+<?php }
+?>
+</ul>
+<?php
+
+}?>
     </div>
 </div>
 </div>
 </div>
 </div>
+<script>
+var events=new Array();
+var guests=new Array();
+var el = document.getElementById('items');
+var sortable = new Sortable(el,{
+onEnd: function (evt) {
+   // alert(evt.newIndex);
+    //alert(evt.related.classNamde.indexOf('badge'));
+  //  return evt.related.className.indexOf('disabled') === -1;
+  var arr=document.getElementsByClassName("eventId");
+  var arr_guest=document.getElementsByClassName("guestId");
+  
+  
+  
+  for(i=0;i<arr.length;i++)
+  {
+      events[i]=arr[i].value;
+      guests[i]=arr_guest[i].value;
+  }
+  
+  }
 
+});
+
+</script>
 <!--
 </body>
 </html>

@@ -8,15 +8,15 @@ include('mailsih2.php');
 		#echo "HEY";
 		$id = $_POST["id"];
 		$event_id=$_GET["eventid"];
-		echo $event_id;
+		//echo $event_id;
 		
 		$b=array();
 			
 		for($x=0;$x<count($id);$x++){	
-		echo "id; ".$id[$x];
-			$sql = 'select `Email_id` from `minister_info` where `minister_id`= \''.$id[$x].'\'';
+		//echo "id; ".$id[$x];
+			$sql = 'select `Email_ID` from `minister_info` where `minister_ID`= \''.$id[$x].'\'';
 			$a=$db->get_row($sql);
-			array_push($b, $a->Email_id);
+			array_push($b, $a->Email_ID);
 			var_dump($a);
 		}
 		
@@ -27,7 +27,7 @@ include('mailsih2.php');
 ?>
 			<script>
 			window.alert("The Update has been sent to the invitees!! :)");		//Change this a bit
-		    window.document.location.href="updateEvent.php?eventid='<?php echo $event_id?>;</script>
+		    window.document.location.href="updateEvent.php?eventid='<?php echo $event_id?>'";</script>
 			</script> 
 <?php
 		//}

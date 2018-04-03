@@ -62,6 +62,26 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script>
+   
+      $(document).ready(function (){
+          $( "#pick" ).hide();
+          $("#calendertext").click(function (){
+              $("#calendertext").hide();
+              $( "#pick" ).show();
+          });
+           $( "#pick" ).change(function (){
+               window.location = "index.php?d="+this.value+"&qs=calenderschedule";
+           });
+          
+      });
+            
+            
+      
+       
+    </script>
 </head>
 <body>
 
@@ -71,16 +91,20 @@
 ?>
   <div id="page-wrapper">
             
-              
+      <div class="row">
             <!-- Content Header (Page header) -->
 <?php
 	include("component/home.php");
        # include ("component/process/home.php");
 ?>
+            <?php
+	include("component/topTenNotification.php");
+       # include ("component/process/home.php");
+?>
               </div>
   </div>
     </div>
-    
+</div>
     <?php
 	include("template/bottomScripts.php");
 ?>

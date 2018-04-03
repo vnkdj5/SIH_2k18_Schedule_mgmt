@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <?php
 session_start();
 if (!isset($_SESSION['id'])) {
-    header("location:login.html");
-    $id=$_SESSION['id'];
+   header("location:login.html");
 }
+$id=$_SESSION['id'];
 ?>
 <html lang="en">
     <head>
@@ -52,6 +53,7 @@ if (!isset($_SESSION['id'])) {
             ?>
             <div id="page-wrapper">
                 <div class="row">
+			
                     <div class="col-lg-12">
                         <h1 class="page-header">Reports</h1>
 
@@ -62,21 +64,74 @@ if (!isset($_SESSION['id'])) {
 
                     <?php
                     include('private/conn.php');
-                    if (isset($_POST["searchCriteria"])) {
-                                                $startDate = $_POST["startDate"];
-                                                $endDate = $_POST["endDate"];
-                    }
                     ?>
                     <form role="form" method="POST" class="form-inline" style="margin-bottom: 20px;">
+			    <label>Schedule Of:</label> 
+    <select name="ministry" class="ministry">
+    <option selected="selected">--Select wing--</option>
+    <?php
+	
+    
+        $stmt = $db->get_results("SELECT * FROM Accessibility WHERE grant_id = '$id'");
+       
+        foreach($stmt as $row)
+        {
+$result3 = $db->get_row('SELECT * FROM minister_info where Minister_ID= \''.$row->access_id.'\'');
+
+$result2 = $db->get_row('SELECT * FROM ministryoffice where office_id= \''.$result3->Office_ID.'\'');
+$result1 = $db->get_row('SELECT * FROM designation where office_id= \''.$result3->Office_ID.'\' AND Minister_ID= \''.$row->access_id.'\'');
+$temp1 = $_POST["ministry"];
+if($temp1!=NULL && $temp1== $result3->Minister_ID ."&". $row->description){
+    ?>
+    <option value="<?php echo $result3->Minister_ID ."&". $row->description; ?>" selected><?php echo $result3->Name ."-".  $result2->office_name ."-". $result1->designation_name; ?></option>
+    <?php
+	
+        } 
+else{
+
+?>
+    <option value="<?php echo $result3->Minister_ID ."&". $row->description; ?>" ><?php echo $result3->Name ."-".  $result2->office_name ."-". $result1->designation_name; ?></option>
+    <?php
+}
+}
+
+
+    ?>
+    </select>
+<?php
+
+?>			<br><br>
+			
+			<?php if(isset($_POST['startDate'])) {
+
+			?>
+			
                         <div class="form-group col-sm-4">
                             <label for="startDate" style="margin-right: 10%;">Start Date: </label>
-                            <input name="startDate" value="<?php echo $startDate;?>" type="date"class="form-control">
+                            <input name="startDate" type="date"class="form-control" value='<?php echo $_POST['startDate'];?>'>
                         </div>
 
-                        <div class="form-group col-sm-4">
+		        <div class="form-group col-sm-4">
                             <label for="endDate" style="margin-right: 10%;">End Date:</label>
-                            <input name="endDate" value="<?php echo $endDate;?>" type="date" class="form-control">
+                            <input name="endDate" type="date" class="form-control"  value='<?php echo $_POST['endDate'];?>'>
                         </div>
+
+			<?php
+			} else {?>
+
+                        <div class="form-group col-sm-4">
+                            <label for="startDate" style="margin-right: 10%;">Start Date: </label>
+                            <input name="startDate" type="date"class="form-control" >
+                        </div>
+
+		        <div class="form-group col-sm-4">
+                            <label for="endDate" style="margin-right: 10%;">End Date:</label>
+                            <input name="endDate" type="date" class="form-control">
+                        </div>
+			<?php
+			}
+			?>
+
 
                         <button type="submit" name="searchCriteria" class="btn btn-primary">Search</button>
                     </form>
@@ -91,42 +146,41 @@ if (!isset($_SESSION['id'])) {
                                 </div>
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
-                                   <ul class="list-inline pull-right">
-                                        <li class="list-inline-item"><span class="pull-right bold">Hide Columns==> </span><li class="list-inline-item">
-                                       <li class="list-inline-item"><a class="toggle-vis pull-right" data-column="6">Venue </a></li>
-                                  <li class="list-inline-item">  <a class="toggle-vis pull-right" data-column="5">End Time </a></li>
-                                    <li class="list-inline-item"><a class="toggle-vis pull-right" data-column="4">Start Time </a></li>
-                                    <li class="list-inline-item"><a class="toggle-vis pull-right" data-column="2">Description </a></li>
-
-                                   </ul>
 
 
 
 
 
-                                    <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                        <thead>
+                                    
+                                            <?php
+                                            if (isset($_POST["searchCriteria"])) {
+                                                $startDate = $_POST["startDate"];
+                                                $endDate = $_POST["endDate"];
+						$temp = $_POST["ministry"];
+						
+						$schedule= explode("&",$temp);
+                                                $result = $db->get_results("SELECT * FROM `create_event` where date >= '$startDate' and date<='$endDate' and host_id = '$schedule[0]'");
+$result4 = $db->get_results("SELECT * FROM `create_event` inner join guests on create_event.event_id = guests.event_id where date >= '$startDate' and date<='$endDate' and guest_id = '$schedule[0]'");
+                                            } else {
+                                                $result = NULL;
+                                            }
+						?>
+<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                        
+                                        
+						<thead>
                                             <tr>
                                                 <th>Sr.No</th>
                                                 <th>Event Name</th>
-                                                <th>Description</th>
+                                               <?php if($schedule[1]==1) echo "<th>Description</th>"; ?>
                                                 <th>Date</th>
                                                 <th>Start Time</th>
                                                 <th>End Time</th>
                                                 <th>Venue</th>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            if (isset($_POST["searchCriteria"])) {
-                                                $startDate = $_POST["startDate"];
-                                                $endDate = $_POST["endDate"];
-                                                $result = $db->get_results("SELECT * FROM `create_event` where date >= '$startDate' and date<='$endDate' and host_id='$id' or event_id in (select event_id from guests where guest_id='$id')");
-                                            } else {
-                                                $result = $db->get_results("select * from create_event where host_id='$id' or event_id in (select event_id from guests where guest_id='$id')");
-                                            }
-
-#
+                                        	</thead>
+					<tbody>
+						<?php
                                             $count = 1;
                                             if (isset($result)) {
                                                 foreach ($result as $row) {
@@ -135,17 +189,41 @@ if (!isset($_SESSION['id'])) {
                                                         <td><?php echo $count; ?></td>
                                                         <td><?php echo $row->title; ?></td>
 
-                                                        <td><?php echo $row->description; ?></td>
+                                                        <?php if($schedule[1]==1) {echo "<td>".$row->description."</td>";} ?>
                                                         <td class="center"><?php echo $row->date; ?></td>
                                                         <td class="center"><?php echo date('H:i:s', strtotime($row->start_time)); ?></td>
                                                         <td class="center"><?php echo date('H:i:s', strtotime($row->end_time)); ?></td>
                                                         <td class="center"><?php echo $row->venue; ?></td>
                                                     </tr>
-        <?php
-        $count=$count+1;
-    }
-}
+       							 <?php
+        						$count=$count+1;
+    							}
+						}
+
+
+					   if (isset($result4)) {
+                                                foreach ($result4 as $row) {
+                                                    ?>
+                                                    <tr class="odd gradeX">
+                                                        <td><?php echo $count; ?></td>
+                                                        <td><?php echo $row->title; ?></td>
+
+                                                        <?php if($schedule[1]==1) {echo "<td>".$row->description."</td>";} ?>
+                                                        <td class="center"><?php echo $row->date; ?></td>
+                                                        <td class="center"><?php echo date('H:i:s', strtotime($row->start_time)); ?></td>
+                                                        <td class="center"><?php echo date('H:i:s', strtotime($row->end_time)); ?></td>
+                                                        <td class="center"><?php echo $row->venue; ?></td>
+                                                    </tr>
+        						<?php
+        						$count=$count+1;
+    							}
+						}
 ?>
+
+
+
+
+
                                         </tbody>
 
                                     </table>
@@ -184,7 +262,7 @@ include("template/bottomScripts.php");
 
         <script>
             $(document).ready(function () {
-              var table=  $('#dataTables-example').DataTable({
+                $('#dataTables-example').DataTable({
                     responsive: true,
                     dom: 'Bfrtip',
                     buttons: [
@@ -213,18 +291,7 @@ include("template/bottomScripts.php");
                         }
                     ]
                 });
-                 $('a.toggle-vis').on( 'click', function (e) {
-        e.preventDefault();
- 
-        // Get the column API object
-        var column = table.column( $(this).attr('data-column') );
- 
-        // Toggle the visibility
-        column.visible( ! column.visible() );
-    } );
-            }) ;
-
-
+            });
         </script>
 
 
@@ -239,3 +306,5 @@ include("template/bottomScripts.php");
         <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
     </body>
 </html>
+
+  

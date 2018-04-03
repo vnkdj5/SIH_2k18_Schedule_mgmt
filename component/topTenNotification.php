@@ -1,10 +1,11 @@
 <?php
 	require_once('private/conn.php');
+        $id=$_SESSION["id"];
 ?>
 <?php
 	//$users=$db->get_results("SELECT * FROM `create_event` INNER JOIN guests ON create_event.event_id = guests.event_id WHERE guests.guest_id = 'M3105' AND //guests.Status IN ('1' OR '2') AND create_event.date >= date(now()) ");
 
-$users=$db->get_results("SELECT * FROM `create_event` INNER JOIN guests ON create_event.event_id = guests.event_id WHERE guests.guest_id = 'M3105' AND (guests.Status = 1 OR guests.Status=2) AND create_event.date >= date(now()) ");
+$users=$db->get_results("SELECT * FROM `create_event` INNER JOIN guests ON create_event.event_id = guests.event_id WHERE guests.guest_id = '".$id."' AND (guests.Status = 1 OR guests.Status=2) AND create_event.date >= date(now()) order by date");
 
 
 	
@@ -19,7 +20,7 @@ $users=$db->get_results("SELECT * FROM `create_event` INNER JOIN guests ON creat
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title."  ">SB Admin 2 - Bootstrap Admin Theme</title."  ">
 
  
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -44,24 +45,22 @@ $users=$db->get_results("SELECT * FROM `create_event` INNER JOIN guests ON creat
 	</head>
 	<body>
 -->
-<div class="col-lg-3">
-		<div class="col-lg-12" style="padding-left:1134px;">
-                    <h1 class="page-header">Notifications</h1>
-                </div>
-		<div class="col-lg-6" style="padding-left:1134px;">
-                    <div class="panel panel-default" style="width:364px;" >
-                        <div class="panel-heading" style="width:364px;" >
+<div class="col-lg-4">
+		
+		<div class="col-lg-12" >
+                    <div class="panel panel-default"  >
+                        <div class="panel-heading"  >
                             Your Latest Events
                         </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body" style="width:364px;">
+                        <div class="panel-body" >
                             <div class="alert alert-success">
                                <?php 
 						
 						$var = sizeof($users);
 						 if (0<$var){
-							echo  "<a href='eventDetails.php?val=".$users[0]->event_id."' class='alert-link'>";
-							echo $users[0]->title;
+							echo  "<a href='updateEvent.php?eventid=".$users[0]->event_id."' class='alert-link'>";
+							echo $users[0]->title."  ";
 							echo $users[0]->date;
 					 	 }
 						else
@@ -74,8 +73,8 @@ $users=$db->get_results("SELECT * FROM `create_event` INNER JOIN guests ON creat
                                  <?php 
 						$var = sizeof($users);
 						 if (1<$var){
-							echo  "<a href='eventDetails.php?val=".$users[1]->event_id."' class='alert-link'>";
-							echo $users[1]->title;
+							echo  "<a href='updateEvent.php?eventid=".$users[1]->event_id."' class='alert-link'>";
+							echo $users[1]->title."  ";
 							echo $users[1]->date;
 					 	 }
 						else
@@ -88,8 +87,8 @@ $users=$db->get_results("SELECT * FROM `create_event` INNER JOIN guests ON creat
                                   <?php 
 						$var = sizeof($users);
 						 if (2<$var){
-		                                       echo  "<a href='eventDetails.php?val=".$users[2]->event_id."' class='alert-link'>";
-							echo $users[2]->title;
+		                                       echo  "<a href='updateEvent.php?eventid=".$users[2]->event_id."' class='alert-link'>";
+							echo $users[2]->title."  ";
 							echo $users[2]->date;
 					 	 }
 						else
@@ -102,8 +101,8 @@ $users=$db->get_results("SELECT * FROM `create_event` INNER JOIN guests ON creat
                                   <?php 
 						$var = sizeof($users);
 						 if (3<$var){
-							echo  "<a href='eventDetails.php?val=".$users[3]->event_id."' class='alert-link'>";
-							echo $users[3]->title;
+							echo  "<a href='updateEvent.php?eventid=".$users[3]->event_id."' class='alert-link'>";
+							echo $users[3]->title."  ";
 							echo $users[3]->date;
 					 	 }
 						else
@@ -116,8 +115,8 @@ $users=$db->get_results("SELECT * FROM `create_event` INNER JOIN guests ON creat
                                  <?php  
 						$var = sizeof($users);
 						 if (4<$var){
-							echo "<a href='eventDetails.php?val=".$users[4]->event_id."' class='alert-link'>";
-							echo $users[4]->title;
+							echo "<a href='updateEvent.php?eventid=".$users[4]->event_id."' class='alert-link'>";
+							echo $users[4]->title."  ";
 							echo $users[4]->date;
 					 	 }
 						else
@@ -130,8 +129,8 @@ $users=$db->get_results("SELECT * FROM `create_event` INNER JOIN guests ON creat
                                   <?php
 						$var = sizeof($users);
 						 if (5<$var){
-							echo "<a href='eventDetails.php?val=".$users[5]->event_id."' class='alert-link'>";
-							echo $users[5]->title;
+							echo "<a href='updateEvent.php?eventid=".$users[5]->event_id."' class='alert-link'>";
+							echo $users[5]->title."  ";
 							echo $users[5]->date;
 					 	 }
 						else
@@ -144,8 +143,8 @@ $users=$db->get_results("SELECT * FROM `create_event` INNER JOIN guests ON creat
                                   <?php
 						$var = sizeof($users);
 						 if (6<$var){
-							echo "<a href='eventDetails.php?val=".$users[6]->event_id."' class='alert-link'>";
-							echo $users[6]->title;
+							echo "<a href='updateEvent.php?eventid=".$users[6]->event_id."' class='alert-link'>";
+							echo $users[6]->title."  ";
 							echo $users[6]->date;
 					 	 }
 						else
@@ -158,8 +157,8 @@ $users=$db->get_results("SELECT * FROM `create_event` INNER JOIN guests ON creat
                                 <?php
 						$var = sizeof($users);
 						 if (7<$var){
-							echo "<a href='eventDetails.php?val=".$users[7]->event_id."' class='alert-link'>";
-							echo $users[7]->title;
+							echo "<a href='updateEvent.php?eventid=".$users[7]->event_id."' class='alert-link'>";
+							echo $users[7]->title."  ";
 							echo $users[7]->date;
 					 	 }
 						else
@@ -172,8 +171,8 @@ $users=$db->get_results("SELECT * FROM `create_event` INNER JOIN guests ON creat
                                  <?php
 						$var = sizeof($users);
 						 if (8<$var){
-							echo "<a href='eventDetails.php?val=".$users[8]->event_id."' class='alert-link'>";
-							echo $users[8]->title;
+							echo "<a href='updateEvent.php?eventid=".$users[8]->event_id."' class='alert-link'>";
+							echo $users[8]->title."  ";
 							echo $users[8]->date;
 					 	 }
 						else
@@ -186,8 +185,8 @@ $users=$db->get_results("SELECT * FROM `create_event` INNER JOIN guests ON creat
                                 <?php
 						$var = sizeof($users);
 						 if (9<$var){
-							echo "<a href='eventDetails.php?val=".$users[9]->event_id."' class='alert-link'>";
-							echo $users[9]->title;
+							echo "<a href='updateEvent.php?eventid=".$users[9]->event_id."' class='alert-link'>";
+							echo $users[9]->title."  ";
 							echo $users[9]->date;
 					 	 }
 						else

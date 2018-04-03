@@ -9,28 +9,28 @@ include('mailsih.php');
 		$id = $_POST["id"];
 		$event_id=$_GET["eventid"];
 		
-		for($x = 0; $x < count($id); $x++)
-		$insert = 'INSERT INTO `guests` VALUES  (\''.$event_id.'\', \''.$id[$x].'\' , 0) ;';
-		
+		for($x = 0; $x < count($id); $x++){
+                    $insert = 'INSERT INTO `guests` VALUES  (\''.$event_id.'\', \''.$id[$x].'\' , 0,0) ;';
+		$db->query($insert);
+                }
 		$b=array();
 			
 		for($x=0;$x<count($id);$x++){	
-			$sql = 'select `Email_id` from `minister_info` where `minister_id`= \''.$id[$x].'\'';
+			$sql = 'select `Email_ID` from `minister_info` where `Minister_ID`= \''.$id[$x].'\'';
 			$a=$db->get_row($sql);
-			array_push($b, $a->Email_id);
+			array_push($b, $a->Email_ID);
 			var_dump($a);
 		}
 		
 		SendCode($b,$event_id);
-		
-		if($db->query($insert)) 
-		{
+              
 ?>
 			<script>
 			window.alert("The mail has been sent!!:)");
                      window.location.href="updateEvent.php?eventid=<?php echo $event_id;?>";
 			</script> 
 <?php
-		}
-	}		     
+		
+	}	
+        
 ?>

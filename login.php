@@ -8,6 +8,8 @@
 
 ?>
 <?php
+ global $v_pwd;
+ global $id;
 if(isset($_POST['loginMode']))
 {
 if($_SERVER["REQUEST_METHOD"] == "POST")
@@ -16,11 +18,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         $eid = $_POST["eid"];
 	$pwd = md5($_POST["pwd"]);
 	$verify = 'SELECT `Password`, `Minister_ID`,`Name`,`Picture` FROM `minister_info` WHERE `Minister_ID` = \''.$eid.'\';';
+	$verify1 = 'SELECT `Password_pa`, `Pa_ID`,`Pa_Name`,`Minister_ID` FROM `PA` WHERE `Pa_ID` = \''.$eid.'\';';
 	$v_output = $db->get_row($verify);
-        
+        $output1=$db->get_row($verify1);
 	//$v_pass = $v_output->fetch_assoc();
+        if($v_output!=NULL)
+        {
+           
+            
 	$v_pwd = $v_output->Password;//$v_pass["Password"];
 	$id = $v_output->Minister_ID;//$v_pass["Minister_ID"];
+        }
 	$default = '827CCB0EEA8A706C4C34A16891F84E7B';
 	$date = Date("Y-m-d");
 	#echo $eid;
@@ -44,14 +52,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 		$_SESSION["id"] = $id;
                   $_SESSION["userName"]=$v_output->Name;
                  $_SESSION["userPicture"]=$v_output->Picture;
+                 $_SESSION["userType"]="MINISTER";
 		//echo $id;
 		//if(strcasecmp($pwd, $default) == 0)
 			//echo "<script>window.document.location.href='reset.php';</script>";
 		echo "<script>window.document.location.href = 'index.php';</script>";
                  //       header("location:index.php");
 	}
-	else
+	else if(strcasecmp($pwd,$output1->Password_pa) == 0)
 	{
+            $_SESSION["id"] = $output1->Minister_ID;
+                  $_SESSION["userName"]=$output1->Pa_Name;
+                  $_SESSION["Pa_ID"]=$output1->Pa_ID;
+                  $_SESSION["userType"]="PA";
+                  echo "<script>window.document.location.href = 'index.php';</script>";
+        }
+        else
+        {
 ?>
 	<script>
 		window.alert("Incorrect Username or Password.");
@@ -120,7 +137,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                                        <input name="remember" type="checkbox" checked value="Remember Me">Remember Me
                                     </label>
                                     <a href="forgotPwd.html" style="float: right">Forgot Password</a>
                                 </div>

@@ -1,6 +1,26 @@
 <?php
       include('private/conn.php');
+     session_start();
+    if(isset($_SESSION["id"]))
+    {
+    	$id=$_SESSION["id"];
+    }
       $event_id=$_GET['eventid'];
+      error_reporting(0);
+      	$can=$_GET['cancel'];
+	//echo $can;
+	$a=1;
+
+	if($can==$a){
+	
+	//echo $event_id;
+	$sql1='DELETE from create_event where event_id=\''.$event_id.'\';';
+	//echo $sql1;
+			
+			 $sql_query1 =  $db->get_results($sql1);     
+			 //$results1 =count($sql_query1);
+	echo '<script>location.href="index.php"</script>';
+        }
 ?>
 
 <html>
@@ -85,30 +105,38 @@
     <body>
 
         <div id="wrapper">
-            <?php
-	include("template/top.php");
-?>
+            <?php include("template/top.php");?>
             <div id="page-wrapper">
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                         <h1 class="page-header">Update Event</h1>
 
                     </div>
+                    
+                    <div class="col-lg-6">
+			<button id="btn_submit" class="btn btn-lg btn-primary" style="float:right; margin-top:4%;" onClick="location.href='getlist.php?cancel=1&eventid=<?php echo $event_id;?>'">Cancel Event</button>
+
+                    </div>
                     <!-- /.col-lg-12 -->
+                   
                 </div>
                 <div id="page-content">  
 <?php 
       $sql="select * from create_event where event_id='$event_id'";
       $ans=$db->get_row($sql);
-      
-?>
+       $sql1="select host_id from create_event where event_id='$event_id'";
+      $ans1=$db->get_row($sql1);
+      $host= $ans1->host_id;
 
-                    
+
+                if(strcmp($host,$id)==0)
+                {
+                ?>    
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                            Add a new Event
+                            You can Update the details
                         </div>
                                 <div class="panel-body ">
                                     <div class="row">
@@ -185,7 +213,7 @@
                                                 <button type="submit" id="btn_submit" class="btn btn-lg btn-primary">Update Button</button>
                                                 </div>
                                             </form>
-                                                                                            <div id="#res1">
+                            <div id="#res1">
 		 					<b>Select Ministry</b><br>
 		   					<form  method="post" action="">
 		       					<input name="search_term" list="search_term" class="form-control" ><br>
@@ -201,9 +229,9 @@
 			    
 							</datalist>
 							
-			<input name="search_button" type="submit" value="Search" style="height:5%;"> 
-		    </form>
-		    </div>
+							<input name="search_button" type="submit" value="Search" style="height:5%;"> 
+		   				  </form>
+		   				 </div>
                                             
                                             
                                         </div>
@@ -221,24 +249,108 @@
                     <!-- /.col-lg-12 -->
                  
             <?PHP            // Search.php
-		
-		$results = 0;
-		$results1=0;
-		$sql_query = 0;
-		$results2=0;
-		$sql_query2 = 0;
-		$first_pos = 0;
-		?>
-		<!--<?php echo $_GET['eventid']?>-->
-		
-		   
-		<?php
+			}
+			else
+			{ 
+				?>
+				 <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                            You can Update the details
+                        </div>
+                                <div class="panel-body ">
+                                    <div class="row">
+                                         
+                                        
+                                        <div class="col-lg-6">
+                                            <div  name="error" id="error">
+
+                                            </div>
+                                            
+                                            <form role="form" method="POST" id="create_event_form" name="create_event_form" action="updateInDb.php?eventid=<?php echo $event_id;?>">
+                                                <div class="form-group">
+                                                    <label>Event Name</label>
+                                                    <input name="event_name" class="form-control" type="text" value="<?php echo $ans->title;?>" disabled>
+                                                    </input>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Description</label>
+                                                    <textarea  name="description" class="form-control" type="text" rows="6" cols="4" disabled><?php echo $ans->description;?></textarea>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Date</label>
+                                                    <input  name="event_date" id="d" class="form-control" type="date" data-provide="datepicker" value="<?php echo $ans->date;?>" disabled>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Start Time</label>
+                                                    <div class="input-group clockpicker">
+                                                        <input name="start_time" type="time" class="form-control" value="<?php echo $ans->start_time;?>" disabled>
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>                                            
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label>End Time</label>
+                                                    <div class="input-group clockpicker">
+                                                        <input name="end_time" type="time" class="form-control" value="<?php echo $ans->end_time;?>" disabled>
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>                                            
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label>Category</label>
+                                                    <select name="category" class="form-control" <?php echo $ans->category;?> disabled>
+                                                        <?php
+                                                        $result = $db->get_results("select * from event_category;");
+                                                        foreach ($result as $value) {
+                                                            ?>
+                                                            <option value="<?php echo $value->category_name; ?>"><?php echo $value->category_name; ?></option>
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Venue</label>
+                                                    <input name="venue" class="form-control" type="text" value="<?php echo $ans->venue;?>" disabled>
+	                                            </div>
+
+	                                             </div>
+                                        <!-- /.col-lg-6 (nested) -->
+                                           <div class="col-lg-3"></div>
+                                    </div>
+                                    <!-- /.col-lg-6 (nested) -->
+                                </div>
+
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+			             <?php                                   
+						}
+					$results = 0;
+					$results1=0;
+					$sql_query = 0;
+					$results2=0;
+					$sql_query2 = 0;
+					$first_pos = 0;
 		 $sql1='SELECT `Name` , `office_name` , minister_info.Minister_ID , `designation_name` FROM `minister_info` INNER JOIN `designation` on minister_info.Minister_ID = designation.Minister_ID INNER JOIN `ministryoffice` on designation.Office_ID = ministryoffice.office_id AND minister_info.Minister_ID in ( SELECT `guest_id` from `guests` where guest_id=minister_info.Minister_id and event_id=\''.$event_id.'\' );';
 
 			 $sql_query1 =  $db->get_results($sql1);     
 			 $results1 =count($sql_query1);
 
-		  if($results1!=0)
+		  if($results1!=0 && strcmp($host,$id)==0 )
 		  {
 		     echo '<center>';
 		     echo '<div class="row">';
@@ -291,10 +403,65 @@
 			       echo '</div>';
 				echo '</center>'; 
 		  } 
+		  else
+		  {
+		  	  
+		     echo '<center>';
+		     echo '<div class="row">';
+			       echo '<div class="col-lg-12" >';
+				   echo '<div class="panel panel-default">';
+				      echo '<div class="panel-heading">';
+				           echo '<h4><b>List Of Invitees</b></h4>';
+				        echo '</div>';
+				        echo '<div class="panel-body">';
+				        echo '<div class="table-responsive">';
+		       
+			    echo '<table class="table table-striped table-bordered table-hover">';          
+				echo '<tr>';
+				    echo '<th>Sr_no</th>';
+				    echo '<th>Minister_ID</th>';
+				    echo '<th>Minister_Name</th>';
+				    echo '<th>Designation</th>';
+				    echo '<th>Office_Name</th>';
+				   // echo '<th>Send_Updates</th>';
+				echo '</tr>';
+			$i = 1;
+			    ?>
+			    <form style="padding-left:20px;" method="post" action="sendUpdate.php?eventid=<?php echo $event_id;?>">;
+			    <?php  foreach ( $sql_query1 as $j )
+			   {
+			       echo "<tr>";
+				    echo "<td>",$i,"</td>";
+				    echo "<td>",$j->Minister_ID,"</td>";
+				    echo "<td>",$j->Name,"</td>";
+				    echo "<td>",$j->designation_name,"</td>";
+				    echo "<td>",$j->office_name,"</td>";
+				   // echo '<td><input type="checkbox" name="id[]" value="'.$j->Minister_ID.'"checked /></td>';
+
+				 echo "</tr>";
+				$i = $i + 1;
+			    
+			  }
+			    //<button type="button" class="btn btn-default">Default</button>
+			echo '</table>';
+			//echo '<br>';
+			//echo ' <button type="submit" class="btn btn-default">Send-Update</button>';
+			    echo '</form>'; 
+		       
+			  echo'</div>';
+				           // <!-- /.table-responsive -->
+				        echo '</div>';
+				        //<!-- /.panel-body -->
+				    echo '</div>';
+				        //<!-- /.panel -->
+			       echo '</div>';
+				echo '</center>'; 
+		  
+		  }
 		if(isset($_POST['search_button']))
 		{
 		      $search_term = $_POST['search_term'];
-		      echo $search_term;
+		      #echo $search_term;
 			
 			
 			    
@@ -463,10 +630,10 @@
 		
 		</div>
             </div>
-		 <?php
-	include("template/bottomScripts.php");
-?>
-		    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+		 <!-- jQuery -->
+		   <?php
+		     include("template/bottomScripts.php");
+		   ?>
 		    <script>
 		    $(document).ready(function() {
 			$('#dataTables-example').DataTable({
